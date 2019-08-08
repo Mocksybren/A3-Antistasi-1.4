@@ -65,7 +65,7 @@ if ((!_isMarker) and (_typeOfAttack != "Air") and (!_super) and ({sidesX getVari
 		_friendlies = if (_sideX == Occupants) then {allUnits select {(_x distance _posDestination < 200) and (alive _x) and ((side (group _x) == _sideX) or (side (group _x) == civilian))}} else {allUnits select {(_x distance _posDestination < 100) and ([_x] call A3A_fnc_canFight) and (side (group _x) == _sideX)}};
 		if (count _friendlies == 0) then
 			{
-			_typeX = "NAPALM";
+			_typeX = if (napalmEnabled) then {"NAPALM"} else {"HE"};
 			{
 			if (vehicle _x isKindOf "Tank") then
 				{
@@ -230,14 +230,14 @@ if (_base != "") then
 			{
 			if (_rnd > prestigeNATO) then
 				{
-				_vehPool = _vehPool - [vehNATOTank];
+				_vehPool = _vehPool - vehNATOTanks;
 				};
 			}
 		else
 			{
 			if (_rnd > prestigeCSAT) then
 				{
-				_vehPool = _vehPool - [vehCSATTank];
+				_vehPool = _vehPool - vehCSATTanks;
 				};
 			};
 		};
@@ -269,11 +269,11 @@ if (_base != "") then
 								{
 								if (_sideX == Occupants) then
 									{
-									if ([vehNATOTank] call A3A_fnc_vehAvailable) then {vehNATOTank} else {selectRandom _vehPool}
+									if ([vehNATOTank] call A3A_fnc_vehAvailable) then {selectRandom vehNATOTanks} else {selectRandom _vehPool}
 									}
 								else
 									{
-									if ([vehCSATTank] call A3A_fnc_vehAvailable) then {vehCSATTank} else {selectRandom _vehPool}
+									if ([vehCSATTank] call A3A_fnc_vehAvailable) then {selectRandom vehCSATTanks} else {selectRandom _vehPool}
 									};
 								};
 							};
